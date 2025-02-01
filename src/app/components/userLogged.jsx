@@ -24,7 +24,7 @@ const UserLogged = () => {
       }
     };
     fetchUser();
-  });
+  }, [user]);
   return { user };
 };
 
