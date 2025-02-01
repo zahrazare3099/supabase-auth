@@ -1,32 +1,22 @@
+import Form from "@/app/components/Form";
+import Input from "@/app/components/Input";
 import Link from "next/link";
 import { login } from "./actions";
-import { signInWithGithub } from "../signup/actions";
+import { signInWithGithub } from "@/app/(authentication)/signup/actions";
 
 function LoginPage() {
   return (
-    <form className="border border-slate-100 flex flex-col gap-y-2 mx-auto p-5 shadow-xl rounded-xl">
-      <h2 className="text-lg px-2 text-center">Login to your account</h2>
-      <label className="px-2" htmlFor="email">
-        Email
-      </label>
-      <input
-        className="rounded-xl px-2 py-1 outline-none border focus:border focus:border-purple-800"
-        id="email"
+    <Form title="Login to your account">
+      <Input
+        label="Email"
         name="email"
-        type="email"
-        required
-        autoComplete="off"
+        inputType="email"
         placeholder="example@gmail.com"
       />
-      <label className="px-2" htmlFor="password">
-        Password
-      </label>
-      <input
-        className="rounded-xl px-2 py-1 outline-none border focus:border focus:border-purple-800"
-        id="password"
+      <Input
+        label="Password"
         name="password"
-        type="password"
-        required
+        inputType="password"
         placeholder="1234"
       />
       <div className="flex flex-col space-y-1 pt-4 text-sm">
@@ -56,15 +46,15 @@ function LoginPage() {
           <p>
             Forgot password?&nbsp;
             <Link
-              href="/signup"
-              className="underline underline-offset-2 hover:underline-offset-4"
+              href="/forgot-password"
+              className="underline cursor-pointer underline-offset-2 hover:underline-offset-4"
             >
               Reset my password
             </Link>
           </p>
         </div>
       </div>
-    </form>
+    </Form>
   );
 }
 export default LoginPage;
