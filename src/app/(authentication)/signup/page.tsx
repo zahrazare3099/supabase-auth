@@ -1,32 +1,22 @@
 import Link from "next/link";
-import { signup } from "../login/actions";
 import { signInWithGithub } from "./actions";
+import Form from "../../components/Form";
+import Input from "../../components/Input";
+import { signup } from "../_actions/actions";
 
 function SignupPage() {
   return (
-    <form className="border border-slate-100 flex flex-col gap-y-2 mx-auto p-5 shadow-xl rounded-xl">
-      <h2 className="text-lg px-2 text-center">Create your account</h2>
-      <label className="px-2" htmlFor="email">
-        Email
-      </label>
-      <input
-        className="rounded-xl px-2 py-1 outline-none border focus:border focus:border-purple-800"
-        id="email"
+    <Form title="Create your account">
+      <Input
+        label="Enter your email"
         name="email"
-        type="email"
-        required
-        autoComplete="off"
+        inputType="email"
         placeholder="example@gmail.com"
       />
-      <label className="px-2" htmlFor="password">
-        Password
-      </label>
-      <input
-        className="rounded-xl px-2 py-1 outline-none border focus:border focus:border-purple-800"
-        id="password"
+      <Input
+        label="Enter your password"
         name="password"
-        type="password"
-        required
+        inputType="password"
         placeholder="1234"
       />
       <div className="flex flex-col space-y-1 pt-4 text-xs">
@@ -55,7 +45,7 @@ function SignupPage() {
           </p>
         </div>
       </div>
-    </form>
+    </Form>
   );
 }
 export default SignupPage;
