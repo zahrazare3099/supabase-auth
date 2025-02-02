@@ -3,13 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function ErrorPage({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export function ErrorPage({ error }: { error: Error & { digest?: string } }) {
   useEffect(() => {
     console.log(error);
   }, [error]);
@@ -19,12 +13,6 @@ export default function ErrorPage({
         Go Home page
       </Link>
       <p className="px-2 text-red-600">Sorry, something went wrong</p>
-      <button
-        onClick={() => reset()}
-        className="border rounded-lg border-black px-2 py-1"
-      >
-        Try again
-      </button>
     </div>
   );
 }
