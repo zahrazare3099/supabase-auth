@@ -1,12 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
 
-export function ErrorPage({ error }: { error: Error & { digest?: string } }) {
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+export default function ErrorPage() {
   return (
     <div className="flex flex-col space-y-3 p-5 items-center">
       <Link href={"/"} className="text-blue-600">
