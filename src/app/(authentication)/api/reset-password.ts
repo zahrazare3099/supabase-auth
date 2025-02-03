@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "../../../../utils/supabase/server";
+import { createClient } from "../../utiles/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function handler(

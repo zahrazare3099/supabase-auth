@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { createClient } from "../../../utils/supabase/client";
+import { createClient } from "../utiles/supabase/client";
 import { redirect } from "next/navigation";
 
 const UserLogged = () => {

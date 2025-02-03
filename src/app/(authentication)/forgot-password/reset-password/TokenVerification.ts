@@ -1,5 +1,5 @@
 "use client";
-import { createClient } from "../../../../../utils/supabase/client";
+import { createClient } from "../../../utiles/supabase/client";
 import { useEffect } from "react";
 import { redirect, useSearchParams } from "next/navigation";
 

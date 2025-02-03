@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { createClient } from "../../../../../utils/supabase/server";
+import { createClient } from "../../../utiles/supabase/server";
 
 export const resetPasswordFunc = async (formData: FormData) => {
   const data = {
