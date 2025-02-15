@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import ToastProvider from "@/components/toaster/ToastProvider";
+import Header from "@/components/header/header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Supaase auth",
-  description: "supaase auth",
+  title: "Supabase auth",
+  description: "supabase auth",
 };
 
 export default function RootLayout({
@@ -13,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-slate-200 h-screen">{children}</body>
+      <body className="bg-slate-200 h-screen">
+        <ToastProvider>
+          <Header />
+          {children}
+        </ToastProvider>
+      </body>
     </html>
   );
 }
