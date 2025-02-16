@@ -4,8 +4,8 @@ import { error } from "console";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
-  // code
-  const code = searchParams.get("token_hash");
+  // code | token_hash
+  const code = searchParams.get("code");
   // if "next" is in param, use it as the redirect URL
   const next = searchParams.get("next") ?? "/";
 
@@ -54,5 +54,5 @@ export async function GET(request: Request) {
   console.log("error in login with github", error);
 
   // return the user to an error page with instructions /auth/auth-code-error
-  return NextResponse.redirect(`${origin}/auth/error`);
+  return NextResponse.redirect(`${origin}/error`);
 }
