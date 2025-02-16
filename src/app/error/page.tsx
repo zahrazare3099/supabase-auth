@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function ErrorPage({ error }: { error: Error }) {
+export default function ErrorPage(error: Error) {
   return (
     <div className="flex flex-col space-y-3 p-5 items-center">
       <Link href={"/"} className="text-blue-600">
