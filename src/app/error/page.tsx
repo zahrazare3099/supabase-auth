@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function Error({ error }: { error: Error }) {
+export default function Error(error: Error) {
   return (
     <div className="flex flex-col space-y-3 p-5 items-center">
       <p>Sorry, something went wrong</p>
