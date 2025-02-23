@@ -24,8 +24,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 To run this project, you need an .env file and must declare two variables, setting them in your GitHub repository as well.
 
-- [Supabse Documentation](https://supabase.com) - Check this page to set the NEXT_PUBLIC_SUPABASE_URL variable in your .env file.
-- [Supabse Documentation](https://supabase.com) - Check this page to set the NEXT_PUBLIC_SUPABASE_ANON_KEY variable in your .env file.
+- [Supabse Documentation](https://supabase.com) - Check this page to set the NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY variables in your .env file.
 - [Github Profile](https://github.com/) - For signing up with GitHub, you need to set your key in your authentication repository either.
 
 
