@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utiles/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function resetpasswordAction(
   formData: FormData,
@@ -12,7 +12,7 @@ export default async function resetpasswordAction(
   const passwordConfirm = formData.get("passwordConfirm") as string;
 
   if (password !== passwordConfirm) {
-    return { status: "پسورد های وارد شده یکسان نیستند" };
+    return { status: "The entered passwords are not the same." };
   }
 
   if (typeof code === "string") {
@@ -27,34 +27,6 @@ export default async function resetpasswordAction(
       };
     }
   }
-
-  // TODO:YOUTUBE
-  // const { error: sessionError } = await supabase.auth.exchangeCodeForSession(
-  //   code
-  // );
-
-  // if (sessionError) {
-  //   if (sessionError?.message?.includes("expired")) {
-  //     return {
-  //       status: "Password reset link has expired. Please request a new one.",
-  //     };
-  //   } else {
-  //     return {
-  //       status: sessionError?.message,
-  //     };
-  //   }
-  // }
-
-  // TODO: AI solution
-  // const { error: setSessionError } = await supabase.auth.setSession({
-  //   access_token: code,
-  //   refresh_token: code,
-  // });
-
-  // if (setSessionError) {
-  //   console.error("Error setting session:", setSessionError);
-  //   return { status: "Failed to set session. Please try again." };
-  // }
 
   const { error } = await supabase.auth.updateUser({
     password: password,

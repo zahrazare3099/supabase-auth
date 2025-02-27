@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utiles/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export default async function loginAction(formData: FormData) {
@@ -20,7 +20,7 @@ export default async function loginAction(formData: FormData) {
     };
   }
 
-  // TODO: create a user instance in user_profiles tabel
+  // create a user instance in user_profiles tabel
   const { data: exitingUser } = await supabase
     .from("user_profiles")
     .select("*")

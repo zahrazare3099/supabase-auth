@@ -12,7 +12,7 @@ export default function RegisterPage() {
 
       <GithubForm />
       <span className="text-xs text-center">
-        Already have an account ? &nbsp;
+        Already have an account? &nbsp;
         <Link href="/login" className="text-blue-600">
           Login!
         </Link>

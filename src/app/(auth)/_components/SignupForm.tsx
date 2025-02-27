@@ -1,47 +1,48 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import signupAction from "../_actions/signupAction";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import AuthButton from "@/components/button/AuthButton";
 
 export default function SignupForm() {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
-  const handleSubmitSignupForm = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessage(null);
-    try {
-      const formData = new FormData(e.currentTarget);
-      const username = formData.get("username");
-      const email = formData.get("email");
-      const password = formData.get("password");
+  const handleSubmitSignupForm = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLoading(true);
+      setErrorMessage(null);
+      try {
+        const formData = new FormData(e.currentTarget);
+        const username = formData.get("username");
+        const email = formData.get("email");
+        const password = formData.get("password");
 
-      if (!username || !password || !email) {
-        return setErrorMessage("All fields are required.");
-      } else {
-        const result = await signupAction(formData);
-        if (result.status !== "success") {
-          toast.error(result.status);
-          throw new Error(result.status);
+        if (!username || !password || !email) {
+          return setErrorMessage("All fields are required.");
+        } else {
+          const result = await signupAction(formData);
+          if (result.status !== "success") {
+            // you can show toast here
+            return setErrorMessage(result.status);
+          }
+          // toast.success('Please check your Email to create new Account')
+          router.push("/register/checkEmail");
         }
-        toast.success("Please check your Email to create new Account");
-        router.push("/login");
+      } catch (error: any) {
+        setErrorMessage(error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error: any) {
-      setErrorMessage(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [signupAction, setLoading, setErrorMessage, router]
+  );
+
   return (
     <form
-      onSubmit={(e) => handleSubmitSignupForm(e)}
+      onSubmit={handleSubmitSignupForm}
       className=" flex flex-col justify-center gap-y-4"
     >
       <div className="flex flex-col gap-y-1">
@@ -85,7 +86,7 @@ export default function SignupForm() {
           *{errorMessage}
         </span>
       ) : null}
-      <AuthButton name="Login" loading={loading} />
+      <AuthButton name="Sign up" loading={loading} />
     </form>
   );
 }

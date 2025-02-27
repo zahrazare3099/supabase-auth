@@ -1,36 +1,41 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import forgetpasswordAction from "../_actions/forgetpasswordAction";
-import toast from "react-hot-toast";
 import AuthButton from "@/components/button/AuthButton";
+import { useRouter } from "next/navigation";
 
 export default function ForgetpasswordForm() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
-  const handleForgetpassword = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    setLoading(true);
-    setErrorMessage(null);
-    try {
-      const result = await forgetpasswordAction(formData);
-      if (result.status == "success") {
-        return toast.success(
-          "A password recovery link has been sent to your email."
-        );
-      } else {
-        return setErrorMessage(result.status);
+  const handleForgetpassword = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      setLoading(true);
+      setErrorMessage(null);
+      try {
+        const result = await forgetpasswordAction(formData);
+        if (result.status === "success") {
+          // return toast.success(
+          //   'A password recovery link has been sent to your email.',
+          // )
+          router.push("/forgot-password/checkEmail");
+        } else {
+          return setErrorMessage(result.status);
+        }
+      } catch (error: any) {
+        setErrorMessage(error.message);
+      } finally {
+        setLoading(false);
       }
-    } catch (error: any) {
-      setErrorMessage(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [forgetpasswordAction, setLoading, setErrorMessage]
+  );
   return (
     <form
-      onSubmit={(e) => handleForgetpassword(e)}
+      onSubmit={handleForgetpassword}
       className=" flex flex-col justify-center gap-y-4"
     >
       <h3 className="text-sm text-center px-3">

@@ -9,7 +9,7 @@ export default function ForgotPasswordPage() {
       <ForgetpasswordForm />
       <div className="text-xs px-3 flex flex-col gap-y-2 pt-2">
         <p>
-          Have an account ?&nbsp;
+          Remember your password? &nbsp;
           <Link href="/login" className="text-blue-600">
             Login!
           </Link>

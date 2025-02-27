@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utiles/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export default async function signupAction(formData: FormData) {
@@ -29,7 +29,7 @@ export default async function signupAction(formData: FormData) {
     };
   } else if (data?.user?.identities?.length === 0) {
     return {
-      status: "کاربری با این ایمیل وجود دارد، لطفا وارد شوید",
+      status: "A user with this email already exists, please login.",
       user: null,
     };
   }

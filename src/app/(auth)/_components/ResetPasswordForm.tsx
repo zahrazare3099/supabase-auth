@@ -1,38 +1,51 @@
 "use client";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useCallback, useEffect, useState } from "react";
 import resetpasswordAction from "../_actions/resetpasswordAction";
 import { useRouter, useSearchParams } from "next/navigation";
 import AuthButton from "@/components/button/AuthButton";
 
 export default function ResetPasswordForm() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const [searchParamsValue, setSearchParamsValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
-  const handleResetpassword = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const code = searchParams.get("token_hash") as string;
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-    setLoading(true);
-    setErrorMessage(null);
-    try {
-      const result = await resetpasswordAction(formData, code);
-
-      if (result.status === "success") {
-        router.push("/");
-        return toast.success("Your password has been successfully updated.");
-      } else {
-        return setErrorMessage(result.status);
-      }
-    } catch (error: any) {
-      setErrorMessage(error.message);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    const code = searchParams.get("token_hash");
+    if (code) {
+      setSearchParamsValue(code as string);
     }
-  };
+  }, [searchParams]);
+
+  const handleResetpassword = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const code = searchParams.get("token_hash") as string;
+
+      setLoading(true);
+      setErrorMessage(null);
+      try {
+        const result = await resetpasswordAction(formData, code);
+
+        if (result.status === "success") {
+          router.push("/reset-password/successfulyMessage");
+          // return toast.success('Your password has been successfully updated.')
+        } else {
+          return setErrorMessage(result.status);
+        }
+      } catch (error: any) {
+        setErrorMessage(error.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    // Specify dependencies here
+    [resetpasswordAction, setLoading, setErrorMessage, router, useSearchParams]
+  );
+
   return (
     <form
       onSubmit={(e) => handleResetpassword(e)}

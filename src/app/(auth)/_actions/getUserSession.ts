@@ -1,4 +1,4 @@
-import { createClient } from "@/utiles/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function getUserSession() {
   const supabase = await createClient();
@@ -6,7 +6,10 @@ export default async function getUserSession() {
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
-    return null;
+    return {
+      status: error?.message,
+      user: null,
+    };
   }
   return { status: "success", user: data?.user };
 }

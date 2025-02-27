@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utiles/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 
 export default async function forgetpasswordAction(formData: FormData) {

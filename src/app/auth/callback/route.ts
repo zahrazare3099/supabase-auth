@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
-import { createClient } from "../../../utiles/supabase/server";
-import { error } from "console";
+import {
+  checkUserExists,
+  exchangeCodeForSession,
+  getUser,
+  insertUser,
+} from "@/lib/db";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -10,28 +14,23 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/";
 
   if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await exchangeCodeForSession(code);
     if (!error) {
-      const { data, error: userError } = await supabase.auth.getUser();
+      const { data, error: userError } = await getUser();
       if (userError) {
         console.log("Error in fetching user Data:", userError.message);
         return NextResponse.redirect(`${origin}/error`);
       }
+
       // Check if user exists in user_profiles table
-      const { data: existUser } = await supabase
-        .from("user_profiles")
-        .select("*")
-        .eq("email", data?.user?.email)
-        .limit(1)
-        .single();
+      const existUser = await checkUserExists(data?.user?.email!);
 
       if (!existUser) {
         // Insert the new user into user_profiles table
-        const { error: dbError } = await supabase.from("user_profiles").insert({
-          email: data?.user?.email,
-          username: data?.user?.user_metadata?.user_name,
-        });
+        const { error: dbError } = await insertUser(
+          data?.user?.email!,
+          data?.user?.user_metadata?.user_name
+        );
         if (dbError) {
           console.log("Error in inserting user data:", dbError.message);
           return NextResponse.redirect(`${origin}/error`);
@@ -51,7 +50,6 @@ export async function GET(request: Request) {
       }
     }
   }
-  console.log("error in login with github", error);
 
   // return the user to an error page with instructions /auth/auth-code-error
   return NextResponse.redirect(`${origin}/error`);
